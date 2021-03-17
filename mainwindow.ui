@@ -72,6 +72,19 @@
        </widget>
       </item>
       <item>
+       <widget class="QLabel" name="label">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="Resources/Image.qrc">:/pic/1</pixmap>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="pushButton_5">
         <property name="text">
          <string>PushButton</string>
@@ -100,6 +113,8 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="Resources/Image.qrc"/>
+ </resources>
  <connections/>
 </ui>

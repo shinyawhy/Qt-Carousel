@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     w.addImage(":/Resources/8.jpg");
     w.setButtonColor(Qt::yellow);
 //    w.setButtonVisible(true);
-    w.startPlay();
     w.show();
+    w.startPlay();
     return a.exec();
 }
