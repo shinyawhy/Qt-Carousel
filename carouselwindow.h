@@ -34,6 +34,7 @@ private:
     void initChangeImageButton();
     void initImage();
     void initWindows();
+    void updateImage();
 
 private:
 

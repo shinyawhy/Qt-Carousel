@@ -99,7 +99,7 @@ void CarouselWindow::initImage()
     if(m_currentImageIndex == m_imageList.size() - 1)
     {
         m_nextLabel = m_imageLabel.at(0);
-        m_nextLabel->setPixmap(QPixmap(":/pic/"+ QString::number(0)));
+        m_nextLabel->setPixmap(QPixmap(":/pic/"+ QString::number(1)));
     }
     else
     {
@@ -180,20 +180,20 @@ void CarouselWindow::onRightButtonClicked()
     if(m_currentImageIndex == 0)
     {
         m_usedLabel = m_imageLabel.at(m_imageList.size() - 2);
-        m_usedLabel->setPixmap(QPixmap(":/pic/"+ QString::number(m_imageList.size() - 2)));
+        m_usedLabel->setPixmap(QPixmap(":/pic/"+ QString::number(m_imageList.size() - 1)));
     }
     else if(m_currentImageIndex == 1)
     {
         m_usedLabel = m_imageLabel.at(m_imageList.size() - 1);
-        m_usedLabel->setPixmap(QPixmap(":/pic/"+ QString::number(m_imageList.size() - 1)));
+        m_usedLabel->setPixmap(QPixmap(":/pic/"+ QString::number(m_imageList.size())));
     }
     else
     {
         m_usedLabel = m_imageLabel.at(m_currentImageIndex - 2);
         m_usedLabel->setPixmap(QPixmap(":/pic/"+ QString::number(m_currentImageIndex - 1)));
     }
-    m_usedLabel->setGeometry(this->width() / 4, m_buttonBackWidget->geometry().height() *3 / 2,
-                                this->width() / 2, this->height()- m_buttonBackWidget->geometry().height() * 5);
+    m_usedLabel->setGeometry(this->width() / 4 + this->width() * 3 / 16, m_buttonBackWidget->geometry().height() * 2,
+                             this->width() / 8, this->height()- m_buttonBackWidget->geometry().height() * 6);
     m_usedLabel->setScaledContents(true);
     m_usedLabel->setAlignment(Qt::AlignCenter);
 
@@ -207,12 +207,12 @@ void CarouselWindow::onRightButtonClicked()
     if(m_currentImageIndex == m_imageList.size() - 1)
     {
         m_readyLabel = m_imageLabel.at(1);
-        m_readyLabel->setPixmap(QPixmap(":/pic/"+ QString::number(1)));
+        m_readyLabel->setPixmap(QPixmap(":/pic/"+ QString::number(2)));
     }
     else if (m_currentImageIndex == m_imageList.size() - 2)
     {
         m_readyLabel = m_imageLabel.at(0);
-        m_readyLabel->setPixmap(QPixmap(":/pic/"+ QString::number(0)));
+        m_readyLabel->setPixmap(QPixmap(":/pic/"+ QString::number(1)));
     }
     else
     {
@@ -230,7 +230,6 @@ void CarouselWindow::onRightButtonClicked()
     m_opacityAnimation->setStartValue(m_readyLabel->geometry());
     m_opacityAnimation->setEndValue(m_nextLabel->geometry());
     m_opacityAnimation->start();
-
 
 
     initImage();
@@ -251,45 +250,76 @@ void CarouselWindow::onLeftButtonClicked()
     m_opacityAnimation->setEasingCurve(QEasingCurve::OutCubic);
     m_opacityAnimation->setStartValue(m_preLabel->geometry());
     m_opacityAnimation->setEndValue(m_currentLabel->geometry());
+
     m_opacityAnimation->start();
 
+
+    // used-pre 是第一张
+    if(m_currentImageIndex == 0)
+    {
+        m_usedLabel = m_imageLabel.at(m_imageList.size() - 2);
+        m_usedLabel->setPixmap(QPixmap(":/pic/"+ QString::number(m_imageList.size() - 1)));
+    }
+    // 第二张
+    else if (m_currentImageIndex == 1)
+    {
+        m_usedLabel = m_imageLabel.at(m_imageList.size() - 1);
+        m_usedLabel->setPixmap(QPixmap(":/pic/"+ QString::number(m_imageList.size())));
+    }
+    else
+    {
+        m_usedLabel = m_imageLabel.at(m_currentImageIndex - 2);
+        m_usedLabel->setPixmap(QPixmap(":/pic/"+ QString::number(m_currentImageIndex - 1)));
+    }
+    m_usedLabel->setGeometry(this->width() / 4 + this->width() * 3 / 16, m_buttonBackWidget->geometry().height() * 2,
+                             this->width() / 8, this->height()- m_buttonBackWidget->geometry().height() * 6);
+    m_usedLabel->setScaledContents(true);
+    m_usedLabel->setAlignment(Qt::AlignCenter);
+
+    m_opacityAnimation = new QPropertyAnimation(m_usedLabel, "geometry");
+    m_opacityAnimation->setDuration(1000);
+    m_opacityAnimation->setEasingCurve(QEasingCurve::OutCubic);
+    m_opacityAnimation->setStartValue(m_usedLabel->geometry());
+    m_opacityAnimation->setEndValue(m_preLabel->geometry());
+    m_opacityAnimation->start();
+
+    // 最后一张
+    if(m_currentImageIndex == m_imageList.size() - 1)
+    {
+        m_readyLabel = m_imageLabel.at(1);
+        m_readyLabel->setPixmap(QPixmap(":/pic/"+ QString::number(2)));
+    }
+    else if (m_currentImageIndex == m_imageList.size() - 2)
+    {
+        m_readyLabel = m_imageLabel.at(0);
+        m_readyLabel->setPixmap(QPixmap(":/pic/"+ QString::number(1)));
+    }
+    else
+    {
+        m_readyLabel = m_imageLabel.at(m_currentImageIndex + 2);
+        m_readyLabel->setPixmap(QPixmap(":/pic/"+ QString::number(m_currentImageIndex + 1)));
+    }
+    m_readyLabel->setGeometry(this->width() / 4 + this->width() * 3 / 16, m_buttonBackWidget->geometry().height() * 2,
+                              this->width() / 8, this->height()- m_buttonBackWidget->geometry().height() * 6);
+    m_readyLabel->setScaledContents(true);
+    m_readyLabel->setAlignment(Qt::AlignCenter);
     m_opacityAnimation = new QPropertyAnimation(m_nextLabel, "geometry");
     m_opacityAnimation->setDuration(1000);
     m_opacityAnimation->setEasingCurve(QEasingCurve::OutCubic);
     m_opacityAnimation->setStartValue(m_nextLabel->geometry());
-    m_opacityAnimation->setEndValue(m_preLabel->geometry());
+    m_opacityAnimation->setEndValue(m_readyLabel->geometry());
     m_opacityAnimation->start();
-
-    if(m_currentImageIndex == m_imageList.size() - 1)
-    {
-        m_usedLabel = m_imageLabel.at(1);
-        m_usedLabel->setPixmap(QPixmap(":/pic/"+ QString::number(1)));
-    }
-    else if (m_currentImageIndex == m_imageList.size() - 2)
-    {
-        m_usedLabel = m_imageLabel.at(0);
-        m_usedLabel->setPixmap(QPixmap(":/pic/"+ QString::number(0)));
-    }
-    else
-    {
-        m_usedLabel = m_imageLabel.at(m_currentImageIndex + 2);
-        m_usedLabel->setPixmap(QPixmap(":/pic/"+ QString::number(m_currentImageIndex + 3)));
-    }
-    m_usedLabel->setGeometry(this->width() / 4, m_buttonBackWidget->geometry().height() / 2,
-                                this->width() / 2, this->height()- m_buttonBackWidget->geometry().height() * 3);
-    m_usedLabel->setScaledContents(true);
-    m_usedLabel->setAlignment(Qt::AlignCenter);
     // 是第一张
     if(m_currentImageIndex == 0)
     {
-        m_currentImageIndex == m_imageList.size() - 1;
+        m_currentImageIndex = m_imageList.size() -1;
     }
     else
     {
         m_currentImageIndex--;
     }
-    initImage();
 
+    initImage();
 }
 
 void CarouselWindow::onImageSwitchButtonClicked()
