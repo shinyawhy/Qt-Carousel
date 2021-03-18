@@ -166,6 +166,7 @@ void CarouselWindow::onRightButtonClicked()
     m_opacityAnimation->setEndValue(m_currentLabel->geometry());
     m_opacityAnimation->start();
 
+
     // 是最后一张
     if(m_currentImageIndex == m_imageList.size() - 1)
     {
@@ -175,7 +176,6 @@ void CarouselWindow::onRightButtonClicked()
     {
         m_currentImageIndex++;
     }
-
     // used-pre
     if(m_currentImageIndex == 0)
     {
@@ -250,9 +250,7 @@ void CarouselWindow::onLeftButtonClicked()
     m_opacityAnimation->setEasingCurve(QEasingCurve::OutCubic);
     m_opacityAnimation->setStartValue(m_preLabel->geometry());
     m_opacityAnimation->setEndValue(m_currentLabel->geometry());
-
     m_opacityAnimation->start();
-
 
     // used-pre 是第一张
     if(m_currentImageIndex == 0)
@@ -318,7 +316,6 @@ void CarouselWindow::onLeftButtonClicked()
     {
         m_currentImageIndex--;
     }
-
     initImage();
 }
 
